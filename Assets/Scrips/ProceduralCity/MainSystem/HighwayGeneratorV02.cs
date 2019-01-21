@@ -59,7 +59,7 @@ namespace V02 {
             y.Add(rot.y - settings.H_branchAngle);
 
             Vector3 bestOnPopMap = PopulationConstraints(x, z, y);
-            bool waterConstraints = WaterConstraints(Mathf.RoundToInt(bestOnPopMap.z), Mathf.RoundToInt(bestOnPopMap.x));
+            //bool waterConstraints = WaterConstraints(Mathf.RoundToInt(bestOnPopMap.z), Mathf.RoundToInt(bestOnPopMap.x));
             this.transform.eulerAngles = new Vector3(rot.x, bestOnPopMap.y, rot.z);
         }
 
