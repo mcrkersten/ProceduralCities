@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1242352117051346}
+  m_IsPrefabAsset: 1
+--- !u!1 &1242352117051346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4936162253681322}
+  - component: {fileID: 114337779531758780}
+  m_Layer: 0
+  m_Name: StartPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4936162253681322
+Transform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1242352117051346}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114337779531758780
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1242352117051346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 201cdf3e698ecff4cb6e7c4bdf59b0dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  singleSpawn: {fileID: 4300000, guid: fb24e31efd05e9c4686d0f4ebf84c123, type: 3}
+  doubleSpawn: {fileID: 4300000, guid: 63026db81c2220743bd61c20f881d715, type: 3}
+  tripleSpawn: {fileID: 4300000, guid: 34d50fa6db672cc449fce87c05da1edb, type: 3}
+  quadSpawn: {fileID: 4300000, guid: ad75aeca42cbdbf4d803c0badbb8614d, type: 3}
+  singleSpawnP: {fileID: 1347581444586296, guid: d4593f6c5b4bc8b4aabcdaa033c78c9c,
+    type: 2}
+  doubleSpawnP: {fileID: 1928157700929318, guid: 808a006643889084e8adf5efade60726,
+    type: 2}
+  tripleSpawnP: {fileID: 1726841048801634, guid: 7a526b9205a09c043a36f143ae4ed154,
+    type: 2}
+  quadSpawnP: {fileID: 1414059509510894, guid: 23221d68fcee8544c9c6987ea83afc7c, type: 2}
+  spawnPoints: 3

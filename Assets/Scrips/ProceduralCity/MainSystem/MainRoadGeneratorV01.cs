@@ -17,7 +17,6 @@ namespace V02 {
         protected override void Start() {
             InitSettings();
             InitLaserPosition();
-            InitLineRenderer();
             debugPos = this.gameObject.transform.position;
             settings.currentMainRoads++;
             length = Random.Range(minLength, maxLenght);
@@ -29,6 +28,8 @@ namespace V02 {
             if (!settings.mainRoadGenerators.Contains(this)) {
                 settings.mainRoadGenerators.Add(this);
             }
+            minLength = settings.MR_MinRoadLength;
+            maxLenght = settings.MR_MaxRoadLength;
             noise = settings.MR_noise;
             roadCrossingSnapDistance = settings.MR_roadCrossingSnapDistance;
             angle = settings.MR_angle;
@@ -123,8 +124,8 @@ namespace V02 {
                 this.transform.position = new Vector3(position.x, 0, position.z);
                 this.transform.eulerAngles = new Vector3(0, position.y, 0);
                 //Reset Debug LineRenderer
-                lr.SetPosition(0, this.transform.position);
-                lr.SetPosition(1, laserPos.transform.position);
+                //lr.SetPosition(0, this.transform.position);
+                //lr.SetPosition(1, laserPos.transform.position);
 
                 if(settings.currentMainRoads < settings.maxMainRoads) {
                     if (canBranch) {

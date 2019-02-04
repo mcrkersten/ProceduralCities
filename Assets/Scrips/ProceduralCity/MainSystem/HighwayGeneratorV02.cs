@@ -14,7 +14,6 @@ namespace V02 {
         protected override void Start() {
             InitSettings();
             InitLaserPosition();
-            InitLineRenderer();
             debugPos = this.gameObject.transform.position;
             settings.currentHighways++;
         }
@@ -103,8 +102,8 @@ namespace V02 {
                 this.transform.position = new Vector3(position.x, 0, position.z);
                 this.transform.eulerAngles = new Vector3(0, position.y, 0);
                 //Reset Debug LineRenderer
-                lr.SetPosition(0, this.transform.position);
-                lr.SetPosition(1, laserPos.transform.position);
+                //lr.SetPosition(0, this.transform.position);
+                //lr.SetPosition(1, laserPos.transform.position);
 
                 if(settings.currentHighways < settings.maxHighways) {
                     if (canBranch) {

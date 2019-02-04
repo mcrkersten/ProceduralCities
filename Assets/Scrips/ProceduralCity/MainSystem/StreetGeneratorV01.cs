@@ -15,14 +15,11 @@ namespace V02 {
         private float homeThreshold;
         private float pointTowerThreshhold;
         private bool buildBuildings;
-        private List<LineRenderer> madeRoads = new List<LineRenderer>();
         private float maxBuildingSize;
-        private float minBuildingSize; 
 
         protected override void Start() {
             InitSettings();
             InitLaserPosition();
-            InitLineRenderer();
             debugPos = this.gameObject.transform.position;
         }
 
@@ -47,7 +44,6 @@ namespace V02 {
             buildBuildings = settings.buildBuildings;
 
             maxBuildingSize = laserDistance;
-            minBuildingSize = laserDistance / 2;
         }
 
         //Function is used by SettingsObject. Used to counter Race Conditions
@@ -741,7 +737,7 @@ namespace V02 {
             Vector3 x = this.transform.eulerAngles;
 
             //Kijk naar +~90 graden
-            float rot = Random.Range(settings.R_minAngle, settings.R_maxAngle);
+            float rot = Random.Range(minAngle, maxAngle);
             this.transform.Rotate(new Vector3(0, rot, 0));
             if (populationMap.GetPixel(Mathf.RoundToInt(laserPos.transform.position.x), Mathf.RoundToInt(laserPos.transform.position.z)).grayscale < settings.R_minPopulation) {
                 Vector2 p = RoadCrossing(laserPos.transform.position);

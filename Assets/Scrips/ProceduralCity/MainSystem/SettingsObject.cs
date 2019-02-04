@@ -23,6 +23,7 @@ namespace V02 {
                     GameObject i = new GameObject("Setings");
                     i.AddComponent(typeof(SettingsObject));
                     instance = i.GetComponent<SettingsObject>();
+                    i.GetComponent<SettingsObject>().startPointPrefab = (GameObject)Resources.Load("StartPoint", typeof(GameObject));            
                 }
                 return instance;
             }
@@ -108,9 +109,12 @@ namespace V02 {
 
         //EDITOR
         ///////////////////////////////////////////////////////////////////////////////
+        public List<GameObject> spawnGizmos = new List<GameObject>();
         public bool editorStart = false;
         public bool editorEnd = false;
-        public Camera camera;
+        public Camera renderCamera;
+        public GameObject startPointPrefab;
+
 
         private void Awake() {
             editorStart = true;
@@ -121,6 +125,12 @@ namespace V02 {
             if (mainRoadGenerators.Count == 0 && highwayGenerators.Count == 0 && !systemIsRunning) {
                 systemIsRunning = true;
                 StartCoroutine(AntiRaceCondition());
+            }
+            if (renderCamera == null) {
+                GameObject c = new GameObject("RemderCam");
+                renderCamera = c.AddComponent<Camera>();
+                c.transform.eulerAngles = new Vector3(90, 0, 0);
+                c.GetComponent<Camera>().orthographic = true;
             }
         }
 
