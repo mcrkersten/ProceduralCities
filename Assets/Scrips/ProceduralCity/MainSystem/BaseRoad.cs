@@ -30,14 +30,12 @@ namespace V02 {
         protected virtual void Start() {
             InitSettings();
             InitLaserPosition();
-            InitLineRenderer();
         }
 
         //If initialization needs to happen again
         protected void LateStart() {
             InitSettings();
             InitLaserPosition();
-            InitLineRenderer();
             debugPos = this.gameObject.transform.position;
         }
 
@@ -46,14 +44,6 @@ namespace V02 {
             settings = SettingsObject.Instance;
             populationMap = settings.populationMap;
             waterMap = settings.waterMap;
-        }
-
-        //Initializes the debugLineRenderer
-        protected void InitLineRenderer() {
-            lr = this.GetComponent<LineRenderer>();
-            lr.positionCount = 2;
-            lr.SetPosition(0, this.transform.position);
-            lr.SetPosition(1, laserPos.transform.position);
         }
 
         //Sets the laserObject on correct position
@@ -75,7 +65,6 @@ namespace V02 {
             List<float> y = new List<float>(); //Rotation
 
             //Get all positions to check.
-            int tempAngle = (angle + Random.Range(1, noise));
             float rotationY = this.transform.eulerAngles.y - (angle / 2);
             for (int i = 0; i < angle; i++) {
                 rotationY = rotationY + 1;
@@ -134,7 +123,7 @@ namespace V02 {
             nlr.endWidth = size;
             Mesh m = new Mesh();
             m.Clear();
-            nlr.BakeMesh(m,settings.camera,true);
+            nlr.BakeMesh(m,settings.renderCamera, true);
             mf.mesh = m;
             Bounds carBounds = mf.mesh.bounds;
             Vector3 whereYouWantMe = this.transform.position;

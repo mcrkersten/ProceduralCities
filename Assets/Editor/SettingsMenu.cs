@@ -6,22 +6,22 @@ using System.IO;
 using System.Text;
 
 namespace V02 {
-    //[ExecuteInEditMode]
+
     public class SettingsMenu : EditorWindow {
 
         private SettingsObject settings;
         private int minLimit = 85;
         private int maxLimit = 95;
-        private int tab = 0; 
+        private int tab = 0;
 
         [MenuItem("Window/CityGenerator")]
-        private static void ShowWindow() {        
+        private static void ShowWindow() {
             GetWindow<SettingsMenu>("City Settings");
         }
 
         private void OnGUI() {
             settings = SettingsObject.Instance;
-            
+            CheckEmptyGizmo();
 
             if (settings.editorStart) {
                 IsGenerating();
@@ -30,6 +30,9 @@ namespace V02 {
             else if (settings.editorEnd) {
                 DoneGenerating();
                 //this.Focus();
+            }
+            else if (settings.spawnGizmos.Count == 0) {
+                CreateGizmo();
             }
 
             else {
@@ -49,7 +52,53 @@ namespace V02 {
                         break;
                 }
             }
-            
+
+        }
+
+        private void CreateGizmo() {
+            var style = new GUIStyle(GUI.skin.label) {
+                fontSize = 15,
+                fixedHeight = 22,
+                alignment = TextAnchor.UpperCenter,
+            };
+
+            minSize = new Vector2(250, 250);
+            maxSize = new Vector2(250, 250);
+
+            GUILayout.Space(10);
+            GUILayout.Label("Texture Maps", style);
+
+            GUILayout.BeginArea(new Rect((Screen.width / 2) - 95, 35, 200, 120));
+            EditorGUILayout.BeginHorizontal();
+            settings.populationMap = TextureField("Population", settings.populationMap);
+            settings.waterMap = TextureField("Water", settings.waterMap);
+            EditorGUILayout.EndHorizontal();
+            GUILayout.EndArea();
+            Rect button = new Rect(25, 190, 200, 50);
+            if (settings.populationMap != null || settings.waterMap != null) {
+                GUILayout.Space(130);
+                GUILayout.Label("Create Start Point", style);
+                if (GUI.Button(button, "Create")) {
+                    if(settings.populationMap != null) {
+                        GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.populationMap.width / 2, 0, settings.populationMap.height / 2), new Quaternion(), null);
+                        settings.spawnGizmos.Add(i);
+                        Selection.activeGameObject = i;
+                        SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                    }
+                    else {
+                        GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.waterMap.width / 2, 0, settings.waterMap.height / 2), new Quaternion(), null);
+                        settings.spawnGizmos.Add(i);
+                        Selection.activeGameObject = i;
+                        SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                    }
+                }
+            }
+            else {
+                GUILayout.Space(130);
+                GUILayout.Label("Create Start Point", style);
+                GUI.backgroundColor = Color.grey;
+                GUI.Box(button, "select textures",GUI.skin.button);
+            }        
         }
 
         private void Highway() {
@@ -96,8 +145,8 @@ namespace V02 {
             if (settings.H_canBranch) {
                 GUILayout.Space(160);
                 EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
-                minSize = new Vector2(250, 535);
-                maxSize = new Vector2(250, 535);
+                minSize = new Vector2(250, 545);
+                maxSize = new Vector2(250, 545);
                 GUILayout.BeginArea(new Rect((Screen.width / 2) - 105, 370, 210, 165));
                 GUILayout.Label("Branch Settings", style);
                 settings.H_branchProbability = IntSliderField("Branch probability", settings.H_branchProbability);
@@ -110,7 +159,7 @@ namespace V02 {
 
                 settings.maxHighways = VariableIntField("Max highways", "The maximum amount of individual highways", settings.maxHighways, 30);
                 GUILayout.EndArea();
-                GUILayout.Space(150);
+                GUILayout.Space(160);
 
             }
             else {
@@ -119,9 +168,25 @@ namespace V02 {
                 maxSize = new Vector2(250, 375);
             }
 
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Build City")) {
                 UnityEditor.EditorApplication.isPlaying = true;
             }
+            if (GUILayout.Button("New spawn")) {
+                if (settings.populationMap != null) {
+                    GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.populationMap.width / 2, 0, settings.populationMap.height / 2), new Quaternion(), null);
+                    settings.spawnGizmos.Add(i);
+                    Selection.activeGameObject = i;
+                    SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                }
+                else {
+                    GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.waterMap.width / 2, 0, settings.waterMap.height / 2), new Quaternion(), null);
+                    settings.spawnGizmos.Add(i);
+                    Selection.activeGameObject = i;
+                    SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         private void MainRoad() {
@@ -180,9 +245,25 @@ namespace V02 {
             }
 
             GUILayout.Space(120);
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Build City")) {
                 UnityEditor.EditorApplication.isPlaying = true;
             }
+            if (GUILayout.Button("New spawn")) {
+                if (settings.populationMap != null) {
+                    GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.populationMap.width / 2, 0, settings.populationMap.height / 2), new Quaternion(), null);
+                    settings.spawnGizmos.Add(i);
+                    Selection.activeGameObject = i;
+                    SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                }
+                else {
+                    GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.waterMap.width / 2, 0, settings.waterMap.height / 2), new Quaternion(), null);
+                    settings.spawnGizmos.Add(i);
+                    Selection.activeGameObject = i;
+                    SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         private void Street() {
@@ -254,11 +335,25 @@ namespace V02 {
                 minSize = new Vector2(250, 378);
                 maxSize = new Vector2(250, 378);
             }
-
-            
+            EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Build City")) {
                 UnityEditor.EditorApplication.isPlaying = true;
             }
+            if (GUILayout.Button("New spawn")) {
+                if (settings.populationMap != null) {
+                    GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.populationMap.width / 2, 0, settings.populationMap.height / 2), new Quaternion(), null);
+                    settings.spawnGizmos.Add(i);
+                    Selection.activeGameObject = i;
+                    SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                }
+                else {
+                    GameObject i = Instantiate(settings.startPointPrefab, new Vector3(settings.waterMap.width / 2, 0, settings.waterMap.height / 2), new Quaternion(), null);
+                    settings.spawnGizmos.Add(i);
+                    Selection.activeGameObject = i;
+                    SceneView.lastActiveSceneView.LookAt(i.transform.position);
+                }
+            }
+            EditorGUILayout.EndHorizontal();
         }
 
         private void IsGenerating() {
@@ -451,6 +546,18 @@ namespace V02 {
         private static void WriteToFile(string s, string filename) {
             using (StreamWriter sw = new StreamWriter(filename)) {
                 sw.Write(s);
+            }
+        }
+
+        private void CheckEmptyGizmo() {
+            List<GameObject> toDelete = new List<GameObject>();
+            foreach (GameObject i in settings.spawnGizmos) {
+                if (i == null) {
+                    toDelete.Add(i);
+                }
+            }
+            foreach (GameObject x in toDelete) {
+                settings.spawnGizmos.Remove(x);
             }
         }
     }
